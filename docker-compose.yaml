@@ -17,7 +17,7 @@ services:
     networks:
       ads_takehome:
     ports:
-      - 8080:80
+      - 8082:80
     depends_on:
       db:
         condition: service_healthy
@@ -31,7 +31,7 @@ services:
     environment:
       # Itt a host gép címére hivatkozunk, mert a böngészőt (jó eséllyel) azon
       # futtatjuk.
-      VITE_API_URL: http://localhost:8080
+      VITE_API_URL: http://localhost:8082
     volumes:
       - ./client:/usr/src/client
     extra_hosts:
@@ -78,13 +78,30 @@ services:
     networks:
       ads_takehome:
     ports:
-      - 8081:3306
+      - 8083:3306
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "--silent"]
       interval: 5s
       timeout: 30s
       retries: 10
       start_period: 0s
+
+  phpmyadmin:
+    hostname: phpmyadmin
+    container_name: takehome-phpmyadmin
+    image: phpmyadmin:5.2.1
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: root
+    networks:
+      ads_takehome:
+    ports:
+      - 8084:80
+    depends_on:
+      db:
+        condition: service_healthy
 
   # TODO: dist
 

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace ADS\TakeHome\Framework;
 
 /**
- * HTTP kérés. 
+ * HTTP kérés.
  *
  * A keretrendszer egy ilyen objektumot ad át a végpont kezelő függvényeknek.
  */
